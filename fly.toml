@@ -1,0 +1,30 @@
+# fly.toml app configuration file generated for goatcounter-on-fly on 2024-01-10T17:20:35+08:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "goatcounter-on-fly"
+primary_region = "hkg"
+
+[build]
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
+
+[env]
+  PORT = "8080"
+  GOATCOUNTER_DB = "sqlite3://data/goatcounter.sqlite3"
+
+[mounts]
+  source="goatcounter_data"
+  destination="/data"
